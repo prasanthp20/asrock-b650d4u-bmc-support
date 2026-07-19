@@ -1,0 +1,51 @@
+From ace65ad310d18520fdf64f705812b1abc3d5ebbf Mon Sep 17 00:00:00 2001
+From: Prasanth Kumar Padarthi <prasanth.padarthi10@gmail.com>
+Date: Sun, 19 Jul 2026 17:39:36 +0530
+Subject: [RFC PATCH v1 0/1] arm: aspeed: Add ASRock Rack B650D4U BMC support
+
+Add initial U-Boot support for the ASRock Rack B650D4U BMC,
+which is based on the ASPEED AST2600.
+
+The board description enables:
+
+- 512 MiB BMC DRAM
+- UART5 debug console
+- AST2600 watchdog
+- 64 MiB Winbond W25Q512JV SPI NOR
+- MAC0 connected to a Realtek RTL8211F PHY using RGMII
+- MAC2 using RMII/NCSI
+
+The environment is kept non-persistent to avoid modifying the vendor
+firmware environment.
+
+Runtime validation was performed by loading main U-Boot into RAM from
+the vendor U-Boot using YMODEM. The following were verified:
+
+- UART console input and output
+- board model detection
+- 512 MiB DRAM capacity and 440 MiB usable memory
+- SPI NOR detection
+- MAC0 link at 100 Mbps full duplex
+- bidirectional ARP and ICMP traffic
+
+SPL execution from reset and cold DRAM initialization have not yet been
+validated. MAC2 is described and the NCSI support is built, but complete
+end-to-end NCSI traffic remains to be validated. Therefore this series
+is being submitted as an RFC.
+
+The build completes with the existing AST2600 spi_bus_bridge node-name
+warning from ast2600.dtsi.
+
+Prasanth Kumar Padarthi (1):
+  arm: aspeed: Add ASRock Rack B650D4U BMC support
+
+ MAINTAINERS                      |   6 ++
+ arch/arm/dts/ast2600-b650d4u.dts |  74 ++++++++++++++++++++
+ configs/b650d4u_defconfig        | 115 +++++++++++++++++++++++++++++++
+ 3 files changed, 195 insertions(+)
+ create mode 100644 arch/arm/dts/ast2600-b650d4u.dts
+ create mode 100644 configs/b650d4u_defconfig
+
+-- 
+2.47.3
+

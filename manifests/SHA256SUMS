@@ -1,0 +1,7 @@
+de2fe9844e2e6d83993dbdccf9c568d553a83ade3f6f0f39cfe79004394808eb  evidence/qemu/qemu-boot.log
+2c5d756c4cc90318fb8a5c6d66a103412b57964d4c40289f8ebf392c79ae0334  patches/linux/aspeed-bmc-asrock-b650d4u.patch
+2edbb41b96191b6734d7b20abe17dde417c9d04ed0793f8e50c3b9c6a6dc2087  patches/u-boot/rfc-v1/v1-0000-cover-letter.patch
+3f00bb9b262520b99c44c85a55b322ad4a50ba4ee6f771f0df4277f96dc6b405  patches/u-boot/rfc-v1/v1-0001-arm-aspeed-Add-ASRock-Rack-B650D4U-BMC-support.patch
+d96de3472196dd63cdcffe392c232d3c81709b24e19f401c67bea35857b23b6a  reference/linux/dts/aspeed-bmc-asrock-b650d4u.dts
+c024e2754950c985997e8e605aebbde719bc3e176866293f33d4a5bf0187f095  reference/u-boot/defconfig/b650d4u_defconfig
+f273e9ce97dc7ec2fe7e603404cbdfff05b089dd7b8701f795026c1484ed8e26  reference/u-boot/dts/ast2600-b650d4u.dts
