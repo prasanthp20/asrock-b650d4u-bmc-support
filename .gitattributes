@@ -1,0 +1,2 @@
+# Archived mailing-list messages must remain byte-for-byte unchanged.
+patches/**/*.patch -whitespace
