@@ -1,0 +1,132 @@
+// SPDX-License-Identifier: GPL-2.0+
+
+/dts-v1/;
+
+#include "ast2600-u-boot.dtsi"
+
+/ {
+	model = "ASRock Rack B650D4U BMC";
+	compatible = "asrock,b650d4u-bmc", "aspeed,ast2600";
+	
+	memory {
+		device_type = "memory";
+		reg = <0x80000000 0x20000000>; /* Fixed: 512 MiB */
+	};
+
+	chosen {
+		stdout-path = &uart5;
+	};
+
+	aliases {
+		serial4 = &uart5;
+		spi0 = &fmc;
+		spi1 = &spi1;
+		ethernet0 = &mac0;
+		ethernet1 = &mac3;
+	};
+};
+
+&uart5 {
+	bootph-all;
+	status = "okay";
+};
+
+&sdrammc {
+	clock-frequency = <400000000>;
+};
+
+&fmc {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_fmcquad_default>;
+
+	flash@0 {
+		reg = <0>;
+		compatible = "jedec,spi-nor";
+		spi-max-frequency = <50000000>;
+		status = "okay";
+		m25p,fast-read;
+		label = "bmc";
+		spi-tx-bus-width = <1>;
+		spi-rx-bus-width = <4>;
+	};
+
+	flash@1 {
+		reg = <1>;
+		status = "disabled";
+	};
+
+	flash@2 {
+		reg = <2>;
+		status = "disabled";
+	};
+};
+
+&spi1 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_spi1_default
+		&pinctrl_spi1abr_default
+		&pinctrl_spi1cs1_default
+		&pinctrl_spi1wp_default
+		&pinctrl_spi1quad_default>;
+
+	flash@0 {
+		reg = <0>;
+		compatible = "jedec,spi-nor";
+		spi-max-frequency = <50000000>;
+		status = "okay";
+		m25p,fast-read;
+		label = "pnor";
+		spi-tx-bus-width = <1>;
+		spi-rx-bus-width = <1>;
+	};
+
+	flash@1 {
+		reg = <1>;
+		status = "disabled";
+	};
+};
+
+&spi2 {
+	status = "disabled";
+};
+
+&mac0 {
+	status = "okay";
+	phy-mode = "rgmii-rxid";
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_rgmii1_default>;
+	phy-handle = <&phy0>; /* Added: Link to the PHY */
+
+	mdio { /* Added: Define the MDIO bus and PHY */
+		#address-cells = <1>;
+		#size-cells = <0>;
+		phy0: ethernet-phy@0 {
+			reg = <0>;
+			compatible = "ethernet-phy-id001c.c916", "ethernet-phy-ieee802.3-c22";
+		};
+	};
+};
+
+&mac3 {
+	status = "okay";
+	phy-mode = "rmii";
+	use-ncsi;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_rmii4_default>;
+};
+
+&i2c7 {
+	status = "okay";
+	
+	eeprom@57 {
+		compatible = "atmel,24c64";
+		reg = <0x57>;
+		pagesize = <64>;
+	};
+};
+
+&wdt1 {
+	status = "okay";
+};

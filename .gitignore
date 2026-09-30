@@ -1,0 +1,14 @@
+build/
+build-*/
+downloads/
+sstate-cache/
+tmp/
+*.static.mtd
+*.wic
+*.ubi
+*.tar
+*.log
+*.ima
+*.bin
+*.key
+*.pem

@@ -1,0 +1,137 @@
+From aaab554f9c3bb611dcd6e4859f69663ada870922 Mon Sep 17 00:00:00 2001
+From: Prasanth Kumar Padarthi <prasanth.padarthi10@gmail.com>
+Date: Tue, 29 Sep 2026 07:17:16 +0530
+
+Subject: [PATCH] Add B650D4U Power passThrough Sequencing
+Upstream-Status: Inappropriate [B650D4U board-specific power sequencing]
+
+---
+ src/power_control.cpp | 94 ++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 93 insertions(+), 1 deletion(-)
+
+diff --git a/src/power_control.cpp b/src/power_control.cpp
+index 065e55b..91be9d3 100644
+--- a/src/power_control.cpp
++++ b/src/power_control.cpp
+@@ -14,6 +14,8 @@
+ // limitations under the License.
+ */
+ #include "power_control.hpp"
++#include <chrono>
++#include <thread>
+ 
+ #include <sys/sysinfo.h>
+ #include <systemd/sd-journal.h>
+@@ -1131,6 +1133,13 @@ static void waitForGPIOEvent(
+         });
+ }
+ 
++static bool isB650D4UPowerOut(const ConfigData& config)
++{
++    return config.type == ConfigType::GPIO &&
++           config.lineName == powerOutConfig.lineName &&
++           config.lineName == "control-power-n";
++}
++
+ static bool requestGPIOEvents(
+     const std::string& name, const std::function<void(bool)>& handler,
+     gpiod::line& gpioLine,
+@@ -1225,7 +1234,8 @@ static int setMaskedGPIOOutputForMs(gpiod::line& maskedGPIOLine,
+     return 0;
+ }
+ 
+-static int setGPIOOutputForMs(const ConfigData& config, const int value,
++// Changed By Prasanth
++/* static int setGPIOOutputForMs(const ConfigData& config, const int value,
+                               const int durationMs)
+ {
+     // If the requested GPIO is masked, use the mask line to set the output
+@@ -1266,6 +1276,88 @@ static int setGPIOOutputForMs(const ConfigData& config, const int value,
+             }
+         });
+     return 0;
++} */
++
++
++static bool b650d4uPowerPassthrough(bool enable);
++
++static bool b650d4uPowerPassthrough(bool enable)
++{
++    constexpr std::string_view controlPath =
++        "/sys/bus/platform/devices/host-power-passthrough/passthrough";
++
++    std::ofstream control(controlPath.data());
++    if (!control)
++    {
++        lg2::error("Unable to open B650D4U passthrough control");
++        return false;
++    }
++
++    control << (enable ? "1\n" : "0\n");
++
++    if (!control)
++    {
++        lg2::error("Unable to set B650D4U passthrough to {VALUE}",
++                   "VALUE", enable);
++        return false;
++    }
++
++    lg2::info("B650D4U passthrough {STATE}",
++              "STATE", enable ? "enabled" : "disabled");
++    return true;
++}
++
++
++static int setGPIOOutputForMs(const ConfigData& config, const int value,
++                              const int durationMs)
++{
++    const bool b650d4uPower =
++        isB650D4UPowerOut(config);
++
++    if (b650d4uPower)
++    {
++        if (!b650d4uPowerPassthrough(false)) // disable selector 1
++        {
++            return -1;
++        }
++        std::this_thread::sleep_for(std::chrono::microseconds(300));
++    }
++
++    gpiod::line gpioLine;
++    if (!setGPIOOutput(config.lineName, value, gpioLine))
++    {
++        if (b650d4uPower)
++        {
++            if (!b650d4uPowerPassthrough(true))
++            {   
++                lg2::error("Failed to restore B650D4U passthrough");
++            }
++        }
++        return -1;
++    }
++
++    const std::string name = config.lineName;
++
++    gpioAssertTimer.expires_after(std::chrono::milliseconds(durationMs));
++    gpioAssertTimer.async_wait(
++        [gpioLine, value, name, b650d4uPower](
++            const boost::system::error_code ec) {
++            gpioLine.set_value(!value);
++            lg2::info("{GPIO_NAME} released", "GPIO_NAME", name);
++
++            if (b650d4uPower && !b650d4uPowerPassthrough(true))
++            {
++                lg2::error("Failed to restore B650D4U passthrough");
++            }
++
++            if (ec && ec != boost::asio::error::operation_aborted)
++            {
++                lg2::error("GPIO timer failed: {ERROR}",
++                           "ERROR", ec.message());
++            }
++        });
++
++    return 0;
+ }
+ 
+ static int assertGPIOForMs(const ConfigData& config, const int durationMs)

@@ -1,0 +1,150 @@
+Upstream-Status: Inappropriate [board-specific ASRock Rack B650D4U hardware support]
+
+diff --git a/drivers/soc/aspeed/Kconfig b/drivers/soc/aspeed/Kconfig
+index 11e4db998c06..318f178f5888 100644
+--- a/drivers/soc/aspeed/Kconfig
++++ b/drivers/soc/aspeed/Kconfig
+@@ -58,6 +58,15 @@ config ASPEED_SBC
+ 	  Say yes to provide information about the secure boot controller in
+ 	  debugfs.
+ 
++config ASPEED_B650D4U_POWER
++	tristate "ASRock B650D4U host power passthrough"
++	select REGMAP
++	select MFD_SYSCON
++	default ARCH_ASPEED
++	help
++	  Enable the AST2600 GPIO passthrough selector used by the
++	  ASRock Rack B650D4U host power-control circuit.
++
+ config ASPEED_XDMA
+ 	tristate "ASPEED XDMA Engine Driver"
+ 	select REGMAP
+diff --git a/drivers/soc/aspeed/Makefile b/drivers/soc/aspeed/Makefile
+index 5f61bb4cc36c..3e9618d1eafc 100644
+--- a/drivers/soc/aspeed/Makefile
++++ b/drivers/soc/aspeed/Makefile
+@@ -5,4 +5,5 @@ obj-$(CONFIG_ASPEED_UART_ROUTING)	+= aspeed-uart-routing.o
+ obj-$(CONFIG_ASPEED_P2A_CTRL)		+= aspeed-p2a-ctrl.o
+ obj-$(CONFIG_ASPEED_SOCINFO)		+= aspeed-socinfo.o
+ obj-$(CONFIG_ASPEED_SBC)		+= aspeed-sbc.o
++obj-$(CONFIG_ASPEED_B650D4U_POWER)	+= aspeed-b650d4u-power.o
+ obj-$(CONFIG_ASPEED_XDMA)		+= aspeed-xdma.o
+diff --git a/drivers/soc/aspeed/aspeed-b650d4u-power.c b/drivers/soc/aspeed/aspeed-b650d4u-power.c
+new file mode 100644
+index 000000000000..000000000000
+--- /dev/null
++++ b/drivers/soc/aspeed/aspeed-b650d4u-power.c
+@@ -0,0 +1,112 @@
++// SPDX-License-Identifier: GPL-2.0-only
++
++#include <linux/device.h>
++#include <linux/init.h>
++#include <linux/kernel.h>
++#include <linux/mfd/syscon.h>
++#include <linux/mutex.h>
++#include <linux/kstrtox.h>
++#include <linux/of.h>
++#include <linux/platform_device.h>
++#include <linux/regmap.h>
++
++
++#define ASPEED_SCU_PROTECTION        0x000
++#define ASPEED_SCU_GPIO_PASSTHROUGH  0x4bc
++#define ASPEED_SCU_GPIO_ACTION       0x51c
++#define ASPEED_SCU_UNLOCK_KEY        0x1688a8a8
++#include <linux/bits.h>
++#define ASPEED_B650D4U_POWER_MASK    GENMASK(27, 26)
++
++static struct regmap *b650d4u_scu;
++static DEFINE_MUTEX(b650d4u_lock);
++
++static int b650d4u_set_passthrough(bool enable)
++{
++    int ret;
++
++    mutex_lock(&b650d4u_lock);
++
++    ret = regmap_write(b650d4u_scu, ASPEED_SCU_PROTECTION,
++                       ASPEED_SCU_UNLOCK_KEY);
++    if (ret){
++        pr_err("B650D4U: action register write failed: %d\n", ret);
++
++        goto out;
++    }
++    ret = regmap_update_bits(b650d4u_scu,
++                             ASPEED_SCU_GPIO_PASSTHROUGH,
++                             ASPEED_B650D4U_POWER_MASK,
++                             enable ? ASPEED_B650D4U_POWER_MASK : 0);
++    if (ret)
++    {
++        pr_err("B650D4U: failed to update GPIO passthrough: %d\n", ret);
++        goto out;
++    }
++
++    if (!enable)
++        ret = regmap_write(b650d4u_scu,
++                           ASPEED_SCU_GPIO_ACTION, 0);
++
++out:
++    mutex_unlock(&b650d4u_lock);
++    return ret;
++}
++
++static ssize_t passthrough_store(struct device *dev,
++				 struct device_attribute *attr,
++				 const char *buf, size_t count)
++{
++	bool enable;
++	int ret;
++
++	ret = kstrtobool(buf, &enable);
++	if (ret)
++		return ret;
++
++	ret = b650d4u_set_passthrough(enable);
++	return ret ? ret : count;
++}
++static DEVICE_ATTR_WO(passthrough);
++
++static int aspeed_b650d4u_power_probe(struct platform_device *pdev)
++{
++	int ret;
++
++	b650d4u_scu = syscon_regmap_lookup_by_phandle(pdev->dev.of_node,
++						      "aspeed,scu");
++	if (IS_ERR(b650d4u_scu))
++		return dev_err_probe(&pdev->dev, PTR_ERR(b650d4u_scu),
++				     "failed to get AST2600 SCU regmap\n");
++
++	ret = b650d4u_set_passthrough(true);
++	if (ret)
++		return dev_err_probe(&pdev->dev, ret,
++				     "failed to enable power GPIO passthrough\n");
++
++	ret = device_create_file(&pdev->dev, &dev_attr_passthrough);
++	if (ret)
++		return dev_err_probe(&pdev->dev, ret,
++				     "failed to create passthrough control\n");
++
++	dev_info(&pdev->dev, "enabled GPIO passthrough selector 1\n");
++	return 0;
++}
++
++static const struct of_device_id aspeed_b650d4u_power_of_match[] = {
++	{ .compatible = "asrock,b650d4u-power-passthrough" },
++	{ }
++};
++MODULE_DEVICE_TABLE(of, aspeed_b650d4u_power_of_match);
++
++static struct platform_driver aspeed_b650d4u_power_driver = {
++	.probe = aspeed_b650d4u_power_probe,
++	.driver = {
++		.name = "aspeed-b650d4u-power",
++		.of_match_table = aspeed_b650d4u_power_of_match,
++	},
++};
++module_platform_driver(aspeed_b650d4u_power_driver);
++
++MODULE_DESCRIPTION("ASRock Rack B650D4U host power GPIO passthrough");
++MODULE_LICENSE("GPL");

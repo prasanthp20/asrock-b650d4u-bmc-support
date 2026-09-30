@@ -1,0 +1,91 @@
+From 34f490b008daa470c2ccad71613639ab4d952373 Mon Sep 17 00:00:00 2001
+From: Prasanth Kumar Padarthi <prasanth.padarthi10@gmail.com>
+Date: Tue, 4 Aug 2026 21:09:28 +0530
+Subject: [PATCH] aspeed: b650d4u: add OpenBMC partition-aware boot
+
+Describe the OpenBMC fixed-partition layout in the U-Boot control
+device tree and load the kernel FIT through the MTD partition interface.
+
+Add a B650D4U-specific text environment which reads the FIT header,
+determines the exact image size, loads the complete FIT and boots it.
+
+This avoids depending on the generic AST2600 EVB memory-mapped FIT
+address.
+
+Upstream-Status: Inappropriate [OpenBMC-specific boot policy]
+Signed-off-by: Prasanth Kumar Padarthi <prasanth.padarthi10@gmail.com>
+---
+ arch/arm/dts/ast2600-b650d4u.dts     | 33 ++++++++++++++++++++++++++++
+ board/aspeed/evb_ast2600/b650d4u.env |  7 ++++++
+ configs/b650d4u_defconfig            |  3 +++
+ 3 files changed, 43 insertions(+)
+ create mode 100644 board/aspeed/evb_ast2600/b650d4u.env
+
+diff --git a/arch/arm/dts/ast2600-b650d4u.dts b/arch/arm/dts/ast2600-b650d4u.dts
+index 97a9e17dc15..781d0e3188e 100644
+--- a/arch/arm/dts/ast2600-b650d4u.dts
++++ b/arch/arm/dts/ast2600-b650d4u.dts
+@@ -41,6 +41,39 @@
+ 		spi-max-frequency = <50000000>;
+ 		spi-tx-bus-width = <1>;
+ 		spi-rx-bus-width = <4>;
++
++		partitions {
++			compatible = "fixed-partitions";
++			#address-cells = <1>;
++			#size-cells = <1>;
++
++			partition@0 {
++				label = "u-boot";
++				reg = <0x00000000 0x000e0000>;
++				read-only;
++			};
++
++			partition@e0000 {
++				label = "u-boot-env";
++				reg = <0x000e0000 0x00020000>;
++			};
++
++			partition@200000 {
++				label = "kernel";
++				reg = <0x00200000 0x00800000>;
++			};
++
++			partition@a00000 {
++				label = "rofs";
++				reg = <0x00a00000 0x02000000>;
++				read-only;
++			};
++
++			partition@2a00000 {
++				label = "rwfs";
++				reg = <0x02a00000 0x01600000>;
++			};
++		};
+ 	};
+ };
+ 
+diff --git a/board/aspeed/evb_ast2600/b650d4u.env b/board/aspeed/evb_ast2600/b650d4u.env
+new file mode 100644
+index 00000000000..1b84b3d82f5
+--- /dev/null
++++ b/board/aspeed/evb_ast2600/b650d4u.env
+@@ -0,0 +1,7 @@
++bootcmd=run boot_openbmc
++boot_openbmc=
++	mtd read kernel ${loadaddr} 0 0x1000 &&
++	fdt addr ${loadaddr} &&
++	fdt header get fitsize totalsize &&
++	mtd read kernel ${loadaddr} 0 ${fitsize} &&
++	bootm ${loadaddr}
+diff --git a/configs/b650d4u_defconfig b/configs/b650d4u_defconfig
+index 4e0e9a5bf01..5729771f8bf 100644
+--- a/configs/b650d4u_defconfig
++++ b/configs/b650d4u_defconfig
+@@ -118,3 +118,6 @@ CONFIG_SHA384=y
+ CONFIG_SPL_CRC32=y
+ CONFIG_HEXDUMP=y
+ CONFIG_PHANDLE_CHECK_SEQ=y
++CONFIG_ENV_SOURCE_FILE="b650d4u"
++CONFIG_CMD_MTD=y
++CONFIG_SPI_FLASH_MTD=y
