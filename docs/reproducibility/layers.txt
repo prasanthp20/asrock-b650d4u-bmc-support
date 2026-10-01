@@ -1,0 +1,13 @@
+NOTE: Starting bitbake server...
+layer                 path                                                                    priority
+========================================================================================================
+core                  /home/prasanth/openbmc/meta                                             5
+openembedded-layer    /home/prasanth/openbmc/meta-openembedded/meta-oe                        5
+networking-layer      /home/prasanth/openbmc/meta-openembedded/meta-networking                5
+perl-layer            /home/prasanth/openbmc/meta-openembedded/meta-perl                      5
+meta-python           /home/prasanth/openbmc/meta-openembedded/meta-python                    5
+phosphor-layer        /home/prasanth/openbmc/meta-phosphor                                    6
+aspeed-layer          /home/prasanth/openbmc/meta-aspeed                                      6
+meta-asrock           /home/prasanth/openbmc/meta-asrock                                      6
+b650d4u               /home/prasanth/openbmc/meta-asrock/meta-b650d4u                         5
+workspacelayer        /home/prasanth/openbmc/build/b650d4u/workspace                          99

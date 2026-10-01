@@ -1,0 +1,11 @@
+MACHINE ?= "b650d4u"
+DISTRO ?= "openbmc-phosphor"
+PACKAGE_CLASSES ?= "package_rpm"
+SANITY_TESTED_DISTROS:append = " Debian-*"
+EXTRA_IMAGE_FEATURES ?= "allow-empty-password allow-root-login serial-autologin-root"
+USER_CLASSES ?= "buildstats"
+
+# B650D4U local U-Boot development
+INHERIT += "externalsrc"
+EXTERNALSRC:pn-u-boot = "/home/prasanth/u-boot"
+EXTERNALSRC_BUILD:pn-u-boot = "/home/prasanth/u-boot"
