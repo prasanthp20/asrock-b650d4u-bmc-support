@@ -1,0 +1,81 @@
+Subject: [RFC PATCH] pinctrl: aspeed: Handle GPIOZ6 pass-through strap on GPIO requests
+
+On B650D4U, clearing SCU4BC mux bits does not permit GPIO power control
+while the SCU51C GPIOZ6 pass-through strap remains set. Handle that strap
+in the AST2600 GPIO request path, preserving unrelated Strap3 bits.
+
+This experimental candidate does not handle the SCU510 bit 28 enable
+path or mixed GPIO and hardware forwarding across the shared pairs.
+Those cases require further design review and validation.
+
+Upstream-Status: Pending
+---
+diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
+--- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
++++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
+@@ -40,6 +40,7 @@
+ #define SCU4D8		0x4D8 /* Multi-function Pin Control #23 */
+ #define SCU500		0x500 /* Hardware Strap 1 */
+ #define SCU510		0x510 /* Hardware Strap 2 */
++#define SCU51C		0x51c /* Hardware Strap 3 */
+ #define SCU610		0x610 /* Disable GPIO Internal Pull-Down #0 */
+ #define SCU614		0x614 /* Disable GPIO Internal Pull-Down #1 */
+ #define SCU618		0x618 /* Disable GPIO Internal Pull-Down #2 */
+@@ -2747,12 +2748,56 @@
+ 	.nconfmaps = ARRAY_SIZE(aspeed_g6_pin_config_map),
+ };
+ 
++/*
++ * GPIOP0-P5 have a global strap-controlled pass-through enable in addition
++ * to their individual SCU4BC mux bits. SCU51C is ordinary RW, unlike the
++ * write-one-set SCU510 register. This candidate handles the GPIOZ6 strap
++ * source only; the SCU510[28] enable path needs separate validation.
++ */
++static int aspeed_g6_gpio_request_enable(struct pinctrl_dev *pctldev,
++					 struct pinctrl_gpio_range *range,
++					 unsigned int offset)
++{
++	struct aspeed_pinctrl_data *pdata = pinctrl_dev_get_drvdata(pctldev);
++	struct regmap *scu = pdata->pinmux.maps[ASPEED_IP_SCU];
++	unsigned int strap2, strap3;
++	int ret;
++
++	if (offset < AB22 || offset > AB23)
++		return aspeed_gpio_request_enable(pctldev, range, offset);
++
++	ret = regmap_read(scu, SCU510, &strap2);
++	if (ret)
++		return ret;
++	if (strap2 & BIT(28))
++		return -EOPNOTSUPP;
++
++	ret = aspeed_gpio_request_enable(pctldev, range, offset);
++	if (ret)
++		return ret;
++
++	/* In dedicated-strap mode, SCU51C[9] does not enable pass-through. */
++	if (strap2 & BIT(30))
++		return 0;
++
++	ret = regmap_update_bits(scu, SCU51C, BIT(9), 0);
++	if (ret)
++		return ret;
++	ret = regmap_read(scu, SCU51C, &strap3);
++	if (ret)
++		return ret;
++	if (strap3 & BIT(9))
++		return -EPERM;
++
++	return 0;
++}
++
+ static const struct pinmux_ops aspeed_g6_pinmux_ops = {
+ 	.get_functions_count = aspeed_pinmux_get_fn_count,
+ 	.get_function_name = aspeed_pinmux_get_fn_name,
+ 	.get_function_groups = aspeed_pinmux_get_fn_groups,
+ 	.set_mux = aspeed_pinmux_set_mux,
+-	.gpio_request_enable = aspeed_gpio_request_enable,
++	.gpio_request_enable = aspeed_g6_gpio_request_enable,
+ 	.strict = true,
+ };
+ 

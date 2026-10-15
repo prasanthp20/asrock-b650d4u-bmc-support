@@ -1,0 +1,14 @@
+{
+  "recorded_on": "2026-10-15",
+  "openbmc_base_commit": "8f3f9a8d20170bc04e245257468bad030d5bcbf8",
+  "linux_source_revision": "68da063267662da17b990c3384d5beceab1cdc80",
+  "submitted_message_id": "20261015035118.9495-1-prasanth.padarthi10@gmail.com",
+  "submitted_on_local": "2026-10-15 09:21:18 +0530",
+  "status": "hardware-tested on B650D4U; RFC submitted; not accepted",
+  "hardware_revision": "not recorded",
+  "serial_log_clock": "Mar 13; unsynchronized; not experiment wall-clock date",
+  "firmware_candidate_sha256": "not captured in supplied test evidence",
+  "original_daemon_sha256": "ebcdd9a3657848409d3c5d0a9526b8a7e3a3029dda7a3628aaa8c533c470b3a1",
+  "diagnostic_gpio_only_daemon_sha256": "eb98e896b67c2742db5ea127a40eecc6d23659a69a635ba9e2c5495bb32bd8bb",
+  "candidate_daemon_sha256": "not independently recaptured after final candidate flash"
+}

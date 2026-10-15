@@ -1,0 +1,13 @@
+b80862ed94db455f2bce58baef6853be3ebbdf884cd6a5080b0d0eda86cde83c  ./manifest.json
+b2dfe38d6167f0b4bb9a9a2f5cddceb51a791643c7172da3ab20878de72f5968  ./README.md
+5428283726700e0ef431b75b5ea249de23932e5c62b12bab3e87611aa5e59c9d  ./source/meta-asrock/meta-b650d4u/recipes-kernel/linux/linux-aspeed/0006-pinctrl-aspeed-g6-gpio-strap9-candidate.patch
+1eae71f61fe0473877e03a6ff724867910560221fb0abcfa101519dc5e7c01b2  ./source/meta-asrock/meta-b650d4u/recipes-kernel/linux/linux-aspeed/aspeed-bmc-asrock-b650d4u-common.dtsi
+dc20e7f63fb7ddc9f38dac4f6aa8799a29aaa441f8e41feeb30b6e781487bad6  ./source/meta-asrock/meta-b650d4u/recipes-kernel/linux/linux-aspeed/aspeed-bmc-asrock-b650d4u.dts
+b313b0ac3ade7ff1715c8958ce6682df227f4145c204e4c55feefe4113289c22  ./source/meta-asrock/meta-b650d4u/recipes-kernel/linux/linux-aspeed_%.bbappend
+8a8a0db0a775afc0c94845dbde46db29f1606dbf9320ae7a4f58fd1b7599aae0  ./source/meta-asrock/meta-b650d4u/recipes-kernel/linux/linux-aspeed_git.bbappend
+227eeacca6e2f4c3885ed9f12609b3bd36130c6a5b9d89e66ffff51ec0bc176d  ./source/meta-asrock/meta-b650d4u/recipes-x86/chassis/x86-power-control/0001-Add-B650D4U-Power-passThrough-Sequencing.patch
+42675126b70e951b074bd2fbd89458e22000af460a33f018955b9d4869a74775  ./source/meta-asrock/meta-b650d4u/recipes-x86/chassis/x86-power-control/0001-power-control-allow-missing-power-button.patch
+a86b726fc95520d0da6bc44eee503f599d747531fc45ab6bbc4afa01536c5373  ./source/meta-asrock/meta-b650d4u/recipes-x86/chassis/x86-power-control/0002-b650d4u-gpio-only-comparison.patch
+3652d33f50819e972e4ddf1aac5c542e6c540fb4ecce9a631bd3a06d36b0c3e5  ./source/meta-asrock/meta-b650d4u/recipes-x86/chassis/x86-power-control_%.bbappend
+47d323408e754c692f9f8764f2369e8bdbe76f56c59b804f52428a6229a7b4d3  ./source/meta-asrock/meta-b650d4u/recipes-x86/chassis/x86-power-control/power-config-host0.json
+af39365e74a86c9d3e8ca16cbccd1eb7d0365caa2509f0bdc63dc7e8cd20c5eb  ./submission/rfc-20261015.patch
