@@ -1,0 +1,6 @@
+{
+  "library": "/home/prasanth/Downloads/_B650D4U_7.02.00.ima.extracted/squashfs-root/usr/local/lib/ipmi/ast2600evb_ami/libipmipar.so.13.14.8",
+  "library_sha256": "7d04b9b66c1161c67e51749e99992dedaac4c4f68a00b7cbdc3cb1e2707d1b4d",
+  "source_profile": "ast2600evb_ami",
+  "caution": "Extracted-image platform.conf selects this profile; running profile has not been independently confirmed. Findings are static call relationships, not validated physical bus addresses or ADC rail scaling."
+}

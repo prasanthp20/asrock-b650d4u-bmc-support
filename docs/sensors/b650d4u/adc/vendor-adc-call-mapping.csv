@@ -1,0 +1,14 @@
+sensor_number,sensor,vendor_avin,reader,status,iio_engine,local_channel
+0x01,VOLT_3VSB,0,dev_asrrvoltagev06_1_0_32_read_device,Static platform call plus libadc engine split recovered; rail scaling pending,0,0
+0x02,VOLT_5VSB,1,dev_asrrvoltagev06_2_0_32_read_device,Static platform call plus libadc engine split recovered; rail scaling pending,0,1
+0x03,VOLT_P0_VCORE,2,dev_asrrvoltagev06_3_0_32_read_device,Static platform call plus libadc engine split recovered; rail scaling pending,0,2
+0x04,VOLT_P0_VSOC,3,dev_asrrvoltagev06_4_0_32_read_device,Static platform call plus libadc engine split recovered; rail scaling pending,0,3
+0x05,VOLT_VMEM,4,dev_asrrvoltagev06_5_0_32_read_device,Static platform call plus libadc engine split recovered; rail scaling pending,0,4
+0x06,VOLT_VMISC,5,dev_asrrvoltagev06_6_0_32_read_device,Static platform call plus libadc engine split recovered; rail scaling pending,0,5
+0x07,VOLT_1.8V_PT21,6,dev_asrrvoltagev06_7_0_32_read_device,Static platform call plus libadc engine split recovered; rail scaling pending,0,6
+0x08,VOLT_VSUS10,7,dev_asrrvoltagev06_8_0_32_read_device,Static platform call plus libadc engine split recovered; rail scaling pending,0,7
+0x09,VOLT_VDD10,8,dev_asrrvoltagev06_9_0_32_read_device,Static platform call plus libadc engine split recovered; rail scaling pending,1,0
+0x0d,VOLT_BAT,12,dev_asrrvoltagev06_13_0_32_read_device,Static platform call plus libadc engine split recovered; rail scaling pending,1,4
+0x0e,VOLT_3V,13,dev_asrrvoltagev06_14_0_32_read_device,Static platform call plus libadc engine split recovered; rail scaling pending,1,5
+0x0f,VOLT_5V,14,dev_asrrvoltagev06_15_0_32_read_device,Static platform call plus libadc engine split recovered; rail scaling pending,1,6
+0x10,VOLT_12V,15,dev_asrrvoltagev06_16_0_32_read_device,Static platform call plus libadc engine split recovered; rail scaling pending,1,7
