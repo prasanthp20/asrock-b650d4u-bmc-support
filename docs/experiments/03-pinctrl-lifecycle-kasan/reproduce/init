@@ -1,0 +1,18 @@
+#!/bin/sh
+export PATH=/bin
+
+mount -t devtmpfs devtmpfs /dev
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
+mount -t debugfs debugfs /sys/kernel/debug
+
+echo "=== B650D4U KASAN lifecycle test ==="
+
+if [ -c /dev/watchdog0 ]; then
+    /bin/busybox watchdog -F -T 60 -t 5 /dev/watchdog0 &
+    echo "Watchdog service started: PID=$!"
+else
+    echo "STOP: watchdog0 is missing; investigate before lifecycle testing."
+fi
+
+exec /bin/sh

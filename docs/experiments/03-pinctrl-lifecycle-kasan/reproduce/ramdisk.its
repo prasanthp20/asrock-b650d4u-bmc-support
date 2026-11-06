@@ -1,0 +1,30 @@
+/dts-v1/;
+
+/ {
+	description = "B650D4U KASAN test ramdisk";
+	#address-cells = <1>;
+
+	images {
+		ramdisk {
+			description = "Minimal lifecycle test userspace";
+			data = /incbin/("initramfs.cpio");
+			type = "ramdisk";
+			arch = "arm";
+			os = "linux";
+			compression = "none";
+
+			hash {
+				algo = "sha256";
+			};
+		};
+	};
+
+	configurations {
+		default = "conf";
+
+		conf {
+			description = "KASAN lifecycle test";
+			ramdisk = "ramdisk";
+		};
+	};
+};

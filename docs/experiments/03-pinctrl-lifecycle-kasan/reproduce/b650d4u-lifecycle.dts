@@ -1,0 +1,29 @@
+/dts-v1/;
+#include "aspeed-g6.dtsi"
+
+/ {
+	model = "ASRock Rack B650D4U lifecycle test";
+	compatible = "asrock,b650d4u-bmc", "aspeed,ast2600";
+
+	aliases {
+		serial4 = &uart5;
+	};
+
+	chosen {
+		stdout-path = "serial4:115200n8";
+	};
+
+	memory@80000000 {
+		device_type = "memory";
+		reg = <0x80000000 0x1f000000>;
+	};
+};
+
+&uart5 {
+	status = "okay";
+};
+
+&wdt1 {
+	status = "okay";
+	timeout-sec = <60>;
+};

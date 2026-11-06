@@ -1,0 +1,14 @@
+diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed.c b/drivers/pinctrl/aspeed/pinctrl-aspeed.c
+index 7e0ebf11a..d19b4d23c 100644
+--- a/drivers/pinctrl/aspeed/pinctrl-aspeed.c
++++ b/drivers/pinctrl/aspeed/pinctrl-aspeed.c
+@@ -461,7 +461,8 @@ int aspeed_pinctrl_probe(struct platform_device *pdev,
+ 
+ 	pdata->pinmux.maps[ASPEED_IP_SCU] = pdata->scu;
+ 
+-	pctl = pinctrl_register(pdesc, &pdev->dev, pdata);
++	/* Unregister before earlier devres allocations such as pdata are freed. */
++	pctl = devm_pinctrl_register(&pdev->dev, pdesc, pdata);
+ 
+ 	if (IS_ERR(pctl)) {
+ 		dev_err(&pdev->dev, "Failed to register pinctrl\n");
