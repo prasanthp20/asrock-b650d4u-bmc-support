@@ -1,0 +1,348 @@
+qemu-system-arm: warning: nic ftgmac100.0 has no peer
+qemu-system-arm: warning: nic ftgmac100.1 has no peer
+qemu-system-arm: warning: nic ftgmac100.2 has no peer
+qemu-system-arm: warning: nic ftgmac100.3 has no peer
+[    0.000000] Booting Linux on physical CPU 0xf00
+[    0.000000] Linux version 7.4.0-rc1-00001-g47bf7a9d72ae-dirty (prasanth@debian) (arm-linux-gnueabihf-gcc (Debian 14.2.0-19) 14.2.0, GNU ld (GNU Binutils for Debian) 2.44) #1 SMP Thu Nov  5 23:15:19 IST 2026
+[    0.000000] CPU: ARMv7 Processor [410fc075] revision 5 (ARMv7), cr=10c5387d
+[    0.000000] CPU: div instructions available: patching division code
+[    0.000000] CPU: PIPT / VIPT nonaliasing data cache, VIPT aliasing instruction cache
+[    0.000000] OF: fdt: Machine model: AST2600 EVB
+[    0.000000] Memory policy: Data cache writealloc
+[    0.000000] Reserved memory: created CMA memory pool at 0xbc000000, size 64 MiB
+[    0.000000] OF: reserved mem: initialized node video, compatible id shared-dma-pool
+[    0.000000] OF: reserved mem: 0xbc000000..0xbfffffff (65536 KiB) map reusable video
+[    0.000000] Reserved memory: created CMA memory pool at 0xbb000000, size 16 MiB
+[    0.000000] OF: reserved mem: initialized node framebuffer, compatible id shared-dma-pool
+[    0.000000] OF: reserved mem: 0xbb000000..0xbbffffff (16384 KiB) map reusable framebuffer
+[    0.000000] cma: Reserved 16 MiB at 0xba000000
+[    0.000000] kasan: Mapping kernel virtual memory block: 80000000-c0000000 at shadow: 6f000000-77000000
+[    0.000000] kasan: Mapping kernel virtual memory block: 7fe00000-80000000 at shadow: 6efc0000-6f000000
+[    0.000000] KernelAddressSanitizer initialized (generic)
+[    0.000000] Zone ranges:
+[    0.000000]   Normal   [mem 0x0000000080000000-0x00000000bfffffff]
+[    0.000000]   HighMem  empty
+[    0.000000] Movable zone start for each node
+[    0.000000] Early memory node ranges
+[    0.000000]   node   0: [mem 0x0000000080000000-0x00000000bfffffff]
+[    0.000000] Initmem setup node 0 [mem 0x0000000080000000-0x00000000bfffffff]
+[    0.000000] percpu: Embedded 17 pages/cpu s47052 r0 d22580 u69632
+[    0.000000] Kernel command line: console=ttyS4,115200 rdinit=/init kasan_multi_shot
+[    0.000000] printk: log buffer data + meta data: 65536 + 204800 = 270336 bytes
+[    0.000000] Dentry cache hash table entries: 131072 (order: 7, 524288 bytes, linear)
+[    0.000000] Inode-cache hash table entries: 65536 (order: 6, 262144 bytes, linear)
+[    0.000000] Built 1 zonelists, mobility grouping on.  Total pages: 262144
+[    0.000000] mem auto-init: stack:all(zero), heap alloc:off, heap free:off
+[    0.000000] stackdepot: allocating hash table via alloc_large_system_hash
+[    0.000000] stackdepot hash table entries: 1048576 (order: 11, 8388608 bytes, linear)
+[    0.000000] stackdepot: allocating space for 8192 stack pools via memblock
+[    0.000000] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=2, Nodes=1
+[    0.000000] ftrace: allocating 35534 entries in 70 pages
+[    0.000000] ftrace: allocated 70 pages with 3 groups
+[    0.000000] rcu: Hierarchical RCU implementation.
+[    0.000000] rcu: 	RCU event tracing is enabled.
+[    0.000000] 	Rude variant of Tasks RCU enabled.
+[    0.000000] 	Tracing variant of Tasks RCU enabled.
+[    0.000000] rcu: RCU calculated value of scheduler-enlistment delay is 10 jiffies.
+[    0.000000] RCU Tasks Rude: Setting shift to 1 and lim to 1 rcu_task_cb_adjust=1 rcu_task_cpu_ids=2.
+[    0.000000] NR_IRQS: 16, nr_irqs: 16, preallocated irqs: 16
+[    0.000000] GIC: GICv2 detected, but range too small and irqchip.gicv2_force_probe not set
+[    0.000000] rcu: srcu_init: Setting srcu_struct sizes based on contention.
+[    0.000000] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 19112604462750000 ns
+[    0.000000] arch_timer: cp15 timer running at 1125.00MHz (sec-phys).
+[    0.000000] clocksource: arch_sys_counter: mask: 0x1fffffffffffffff max_cycles: 0x103759ff175, max_idle_ns: 440795256579 ns
+[    0.000208] sched_clock: 61 bits at 1125MHz, resolution 0ns, wraps every 2199023255551ns
+[    0.000492] Switching to timer-based delay loop, resolution 0ns
+[    0.024592] Calibrating delay loop (skipped), value calculated using timer frequency.. 2250.00 BogoMIPS (lpj=11250000)
+[    0.024973] CPU: Testing write buffer coherency: ok
+[    0.028183] pid_max: default: 32768 minimum: 301
+[    0.061226] Mount-cache hash table entries: 2048 (order: 1, 8192 bytes, linear)
+[    0.061399] Mountpoint-cache hash table entries: 2048 (order: 1, 8192 bytes, linear)
+[    0.085827] VFS: Finished mounting rootfs on nullfs
+[    0.172875] Setting up static identity map for 0x80100000 - 0x80100078
+[    0.176362] rcu: Hierarchical SRCU implementation.
+[    0.176448] rcu: 	Max phase no-delay instances is 1000.
+[    0.181027] Timer migration: 1 hierarchy levels; 8 children per group; 1 crossnode level
+[    0.199538] ASPEED AST2600 rev A3 (05030303)
+[    0.204127] smp: Bringing up secondary CPUs ...
+[    0.233747] smp: Brought up 1 node, 2 CPUs
+[    0.233961] SMP: Total of 2 processors activated (4500.00 BogoMIPS).
+[    0.234076] CPU: All CPU(s) started in HYP mode.
+[    0.234114] CPU: Virtualization extensions available.
+[    0.259966] Memory: 767348K/1048576K available (16384K kernel code, 3773K rwdata, 6176K rodata, 1024K init, 321K bss, 179424K reserved, 98304K cma-reserved, 0K highmem)
+[    0.289336] devtmpfs: initialized
+[    0.793583] VFP support v0.3: implementor 41 architecture 2 part 30 variant 7 rev 5
+[    0.862776] posixtimers hash table entries: 1024 (order: 1, 8192 bytes, linear)
+[    0.863653] futex hash table entries: 512 (32768 bytes on 1 NUMA nodes, total 32 KiB, linear).
+[    0.960186] NET: Registered PF_NETLINK/PF_ROUTE protocol family
+[    0.984039] DMA: preallocated 256 KiB pool for atomic coherent allocations
+[    1.023305] hw-breakpoint: found 5 (+1 reserved) breakpoint and 4 watchpoint registers.
+[    1.023521] hw-breakpoint: maximum watchpoint size is 8 bytes.
+[    1.090412] /ahb/interrupt-controller@40461000: Fixed dependency cycle(s) with /ahb/interrupt-controller@40461000
+[    1.609141] SCSI subsystem initialized
+[    1.623104] usbcore: registered new interface driver usbfs
+[    1.625463] usbcore: registered new interface driver hub
+[    1.628395] usbcore: registered new device driver usb
+[    1.635856] mc: Linux media interface: v0.10
+[    1.637802] videodev: Linux video capture interface: v2.00
+[    1.639799] pps_core: LinuxPPS API ver. 1 registered
+[    1.639886] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    1.640808] PTP clock support registered
+[    1.642026] EDAC MC: Ver: 3.0.0
+[    1.745628] mctp: management component transport protocol core
+[    1.745779] NET: Registered PF_MCTP protocol family
+[    1.801613] clocksource: Switched to clocksource arch_sys_counter
+[    1.981005] NET: Registered PF_INET protocol family
+[    1.987214] IP idents hash table entries: 16384 (order: 5, 131072 bytes, linear)
+[    2.036268] tcp_listen_portaddr_hash hash table entries: 512 (order: 0, 4096 bytes, linear)
+[    2.037007] Table-perturb hash table entries: 65536 (order: 6, 262144 bytes, linear)
+[    2.043046] TCP established hash table entries: 8192 (order: 3, 32768 bytes, linear)
+[    2.046569] TCP bind hash table entries: 8192 (order: 5, 131072 bytes, linear)
+[    2.050882] TCP: Hash tables configured (established 8192 bind 8192)
+[    2.056992] UDP hash table entries: 512 (order: 3, 28672 bytes, linear)
+[    2.069650] NET: Registered PF_UNIX/PF_LOCAL protocol family
+[    2.104759] NET: Registered PF_INET6 protocol family
+[    2.171473] Segment Routing with IPv6
+[    2.178405] In-situ OAM (IOAM) with IPv6
+[    2.219195] Unpacking initramfs...
+[    2.248704] workingset: timestamp_bits=30 (anon: 25) max_order=18 bucket_order=0 (anon: 0)
+[    2.292676] Freeing initrd memory: 1352K
+[    2.349546] squashfs: version 4.0 (2009/01/31) Phillip Lougher
+[    2.354111] jffs2: version 2.2. (SUMMARY)  © 2001-2006 Red Hat, Inc.
+[    2.385017] NET: Registered PF_ALG protocol family
+[    2.386918] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 245)
+[    2.389089] io scheduler bfq registered
+[    2.573679] Serial: 8250/16550 driver, 6 ports, IRQ sharing enabled
+[    2.673576] printk: console [ttyS4] disabled
+[    2.728782] 1e784000.serial: ttyS4 MMIO:0x1e784000 (irq = 33, base_baud = 1500000) is a 16550A
+[    2.739931] printk: console [ttyS4] enabled
+[    2.826253] timeriomem_rng 1e6e2524.hwrng: 32bits from 0x(ptrval) @ 1us
+[    2.836251] random: crng init done
+[    2.873485] aspeed_gfx 1e6e6000.display: assigned reserved memory node framebuffer
+[    2.929690] [drm] Initialized aspeed-gfx-drm 1.0.0 for 1e6e6000.display on minor 0
+[    2.980054] aspeed_gfx 1e6e6000.display: [drm] fb0: aspeed-gfx-drmd frame buffer device
+[    3.147821] loop: module loaded
+[    3.547688] spi-nor spi0.0: SFDP parsing failed. You need to manually declare the flash parameters.
+[    3.547931] spi-nor spi0.0: probe with driver spi-nor failed with error -22
+[    3.582559] spi-nor spi1.0: SFDP parsing failed. You need to manually declare the flash parameters.
+[    3.582697] spi-nor spi1.0: probe with driver spi-nor failed with error -22
+[    3.772730] ftgmac100 1e660000.ethernet: Read MAC address 52:54:00:12:34:56 from chip
+[    3.779584] RTL8211E Gigabit Ethernet 1e650000.mdio-1:00: attached PHY driver (mii_bus:phy_addr=1e650000.mdio-1:00, irq=POLL)
+[    3.818433] ftgmac100 1e660000.ethernet eth0: irq 35, mapped at 5c49fc20
+[    3.829104] ftgmac100 1e680000.ethernet: Read MAC address 52:54:00:12:34:57 from chip
+[    3.835228] RTL8211E Gigabit Ethernet 1e650008.mdio-1:00: attached PHY driver (mii_bus:phy_addr=1e650008.mdio-1:00, irq=POLL)
+[    3.891126] ftgmac100 1e680000.ethernet eth1: irq 36, mapped at eb885994
+[    3.898093] ftgmac100 1e670000.ethernet: Read MAC address 52:54:00:12:34:58 from chip
+[    3.904064] RTL8211E Gigabit Ethernet 1e650010.mdio-1:00: attached PHY driver (mii_bus:phy_addr=1e650010.mdio-1:00, irq=POLL)
+[    3.942733] ftgmac100 1e670000.ethernet eth2: irq 37, mapped at 3c1082e1
+[    3.949119] ftgmac100 1e690000.ethernet: Read MAC address 52:54:00:12:34:59 from chip
+[    3.957279] RTL8211E Gigabit Ethernet 1e650018.mdio-1:00: attached PHY driver (mii_bus:phy_addr=1e650018.mdio-1:00, irq=POLL)
+[    3.994360] ftgmac100 1e690000.ethernet eth3: irq 38, mapped at 64a8cd4f
+[    3.997248] MCTP I2C interface driver
+[    4.023316] ehci-platform 1e6a3000.usb: EHCI Host Controller
+[    4.025549] ehci-platform 1e6a3000.usb: new USB bus registered, assigned bus number 1
+[    4.026677] usbcore: registered new interface driver usb-storage
+[    4.056931] usbcore: registered new interface driver pl2303
+[    4.058857] usbserial: USB Serial support registered for pl2303
+[    4.069329] ehci-platform 1e6a3000.usb: irq 39, io mem 0x1e6a3000
+[    4.091553] ehci-platform 1e6a3000.usb: USB 2.0 started, EHCI 1.00
+[    4.106043] usb usb1: New USB device found: idVendor=1d6b, idProduct=0002, bcdDevice=7.04
+[    4.135998] usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    4.136325] usb usb1: Product: EHCI Host Controller
+[    4.136515] usb usb1: Manufacturer: Linux 7.4.0-rc1-00001-g47bf7a9d72ae-dirty ehci_hcd
+[    4.136671] usb usb1: SerialNumber: 1e6a3000.usb
+[    4.205686] hub 1-0:1.0: USB hub found
+[    4.209675] hub 1-0:1.0: 6 ports detected
+[    4.222773] aspeed_vhub 1e6a0000.usb-vhub: Initialized virtual hub in USB2 mode
+[    4.262117] aspeed-rtc 1e781000.rtc: registered as rtc0
+[    4.262348] aspeed-rtc 1e781000.rtc: hctosys: unable to read the hardware clock
+[    4.266848] i2c_dev: i2c /dev entries driver
+[    4.307511] aspeed-i2c-bus 1e78a080.i2c: i2c bus 0 registered, irq 41
+[    4.338286] aspeed-i2c-bus 1e78a100.i2c: i2c bus 1 registered, irq 42
+[    4.374191] aspeed-i2c-bus 1e78a180.i2c: i2c bus 2 registered, irq 43
+[    4.393733] aspeed-i2c-bus 1e78a200.i2c: i2c bus 3 registered, irq 44
+[    4.412707] aspeed-i2c-bus 1e78a280.i2c: i2c bus 4 registered, irq 45
+[    4.429202] aspeed-i2c-bus 1e78a300.i2c: i2c bus 5 registered, irq 46
+[    4.448682] aspeed-i2c-bus 1e78a380.i2c: i2c bus 6 registered, irq 47
+[    4.475756] aspeed-i2c-bus 1e78a400.i2c: i2c bus 7 registered, irq 48
+[    4.496488] aspeed-i2c-bus 1e78a480.i2c: i2c bus 8 registered, irq 49
+[    4.514028] aspeed-i2c-bus 1e78a500.i2c: i2c bus 9 registered, irq 50
+[    4.545915] aspeed-i2c-bus 1e78a680.i2c: i2c bus 12 registered, irq 51
+[    4.577074] aspeed-i2c-bus 1e78a700.i2c: i2c bus 13 registered, irq 52
+[    4.607421] aspeed-i2c-bus 1e78a780.i2c: i2c bus 14 registered, irq 53
+[    4.639375] aspeed-i2c-bus 1e78a800.i2c: i2c bus 15 registered, irq 54
+[    4.668160] aspeed-video 1e700000.video: irq 55
+[    4.668790] aspeed-video 1e700000.video: Unable to get reset
+[    4.668993] aspeed-video 1e700000.video: probe with driver aspeed-video failed with error -2
+[    4.690228] Driver for 1-wire Dallas network protocol.
+[    4.712116] adt7475 7-002e: Error configuring attenuator bypass
+[    4.740028] adt7475 7-002e: ADT7490 device, revision 2
+[    4.740823] adt7475 7-002e: Optional features: in4 pwm2
+[    4.741072] adt7475 7-002e: Bypassing attenuators on: in1 in3 in4
+[    4.778731] lm75 8-004d: hwmon0: sensor 'lm75'
+[    4.798908] aspeed-edac 1e6e0000.sdram: ECC mode is not configured in u-boot
+[    4.799088] aspeed-edac 1e6e0000.sdram: probe with driver aspeed-edac failed with error -1
+[    4.833964] usbcore: registered new interface driver usbhid
+[    4.834093] usbhid: USB HID core driver
+[    4.938710] sdhci-aspeed 1e750100.sdhci: Configured for slot 0
+[    5.013981] at24 7-0050: 1024 byte 24c08 EEPROM, writable, 16 bytes/write
+[    5.038317] fsi-master-aspeed 1e79b000.fsi: hub version e0050101 (1 links)
+[    5.038894] fsi-master-aspeed 1e79b000.fsi: mmode set to 70040110 (divisor 1)
+[    5.041992] mmc0: SDHCI controller on 1e750100.sdhci [1e750100.sdhci] using ADMA
+[    5.124982] NET: Registered PF_PACKET protocol family
+[    5.125424] 8021q: 802.1Q VLAN Support v1.8
+[    5.129592] Registering SWP/SWPB emulation handler
+[    5.135074] mmc0: Failed to initialize a non-removable card
+[    6.089617] sdhci-aspeed 1e740100.sdhci: Configured for slot 0
+[    6.095021] netconsole: network logging started
+[    6.095272] sdhci-aspeed 1e740200.sdhci: Configured for slot 1
+[    6.114400] clk: Disabling unused clocks
+[    6.184228] mmc2: SDHCI controller on 1e740200.sdhci [1e740200.sdhci] using ADMA
+[    6.184474] mmc1: SDHCI controller on 1e740100.sdhci [1e740100.sdhci] using ADMA
+[    6.368987] Freeing unused kernel image (initmem) memory: 1024K
+[    6.473765] Checked W+X mappings: passed, no W+X pages found
+[    6.474439] Run /init as init process
+AST2600 KASAN test environment
+
+
+BusyBox v1.37.0 (Debian 1:1.37.0-6+b9) built-in shell (ash)
+Enter 'help' for a list of built-in commands.
+
+/bin/sh: can't access tty; job control turned off
+~ # [6n
+~ # [6n
+~ # [6ncat /proc/version
+Linux version 7.4.0-rc1-00001-g47bf7a9d72ae-dirty (prasanth@debian) (arm-linux-gnueabihf-gcc (Debian 14.2.0-19) 14.2.0, GNU ld (GNU Binutils for Debian) 2.44) #1 SMP Thu Nov  5 23:15:19 IST 2026
+~ # [6n
+~ # [6ndmesg | grep -iE 'kasan|pinctrl|handover|passthrough'
+[    0.000000] kasan: Mapping kernel virtual memory block: 80000000-c0000000 at shadow: 6f000000-77000000
+[    0.000000] kasan: Mapping kernel virtual memory block: 7fe00000-80000000 at shadow: 6efc0000-6f000000
+[    0.000000] Kernel command line: console=ttyS4,115200 rdinit=/init kasan_multi_shot
+~ # [6n
+~ # [6nls /sys/bus/platform/drivers/aspeed-g6-pinctrl/
+1e6e2000.syscon:pinctrl  uevent
+bind                     unbind
+~ # [6n
+~ # [6nls /sys/kernel/debug/pinctrl/
+1e6e2000.syscon:pinctrl-aspeed-g6-pinctrl
+pinctrl-devices
+pinctrl-handles
+pinctrl-maps
+~ # [6n
+~ # [6n
+~ # [6ndriver=/sys/bus/platform/drivers/aspeed-g6-pinctrl
+~ # [6n
+~ # [6ndevice=1e6e2000.syscon:pinctrl
+~ # [6ndebug=/sys/kernel/debug/pinctrl/1e6e2000.syscon:pinctrl-aspeed-g6-pinctrl
+~ # [6n
+~ # [6necho "=== Before unbind ==="
+=== Before unbind ===
+~ # cat /sys/kernel/debug/pinctrl/pinctrl-devices
+name [pinmux] [pinconf]
+aspeed-g6-pinctrl yes yes
+~ # cat "$debug/pins" > /dev/null
+~ # [6nls /sys/kernel/debug/pinctrl/
+1e6e2000.syscon:pinctrl-aspeed-g6-pinctrl
+pinctrl-devices
+pinctrl-handles
+pinctrl-maps
+~ # [6n
+~ # [6ncat /sys/kernel/debug/pinctrl/pinctrl-devices
+name [pinmux] [pinconf]
+aspeed-g6-pinctrl yes yes
+~ # [6n
+~ # [6nif [ -d "$debug" ]; then
+>     echo "FAIL: controller debugfs directory remains"
+> else
+>     echo "Controller debugfs directory removed"
+> fi
+FAIL: controller debugfs directory remains
+~ # [6n
+~ # [6necho "=== Rebind ==="
+=== Rebind ===
+~ # echo "$device" > "$driver/bind"
+sh: write error: Device or resource busy
+~ # echo "bind status=$?"
+bind status=1
+~ # 
+~ # ls "$driver/"
+1e6e2000.syscon:pinctrl  uevent
+bind                     unbind
+~ # cat /sys/kernel/debug/pinctrl/pinctrl-devices
+name [pinmux] [pinconf]
+aspeed-g6-pinctrl yes yes
+~ # cat "$debug/pins" > /dev/null
+~ # echo "debugfs read status=$?"
+debugfs read status=0
+~ # 
+~ # dmesg | grep -iE 'BUG:|KASAN:|use-after-free|Oops:|WARNING:|pinctrl'
+[    0.000000] kasan: Mapping kernel virtual memory block: 80000000-c0000000 at shadow: 6f000000-77000000
+[    0.000000] kasan: Mapping kernel virtual memory block: 7fe00000-80000000 at shadow: 6efc0000-6f000000
+~ # [6n
+~ # [6n
+~ # [6necho "=== Actual unbind ==="
+=== Actual unbind ===
+~ # echo "$device" > "$driver/unbind"
+
+~ # echo "unbind status=$?"
+unbind status=0
+~ # [6n
+~ # [6n
+~ # [6nls "$driver/"
+bind    uevent  unbind
+~ # ls /sys/kernel/debug/pinctrl/
+pinctrl-devices  pinctrl-handles  pinctrl-maps
+~ # cat /sys/kernel/debug/pinctrl/pinctrl-devices
+name [pinmux] [pinconf]
+~ # [6n
+~ # [6n
+~ # [6n
+~ # [6necho "$device" > "$driver/bind"
+~ # echo "bin[  198.804910] aspeed-i2c-bus 1e78a080.i2c: i2c bus 0 registered, irq 41
+d st[  198.818930] aspeed-i2c-bus 1e78a100.i2c: i2c bus 1 registered, irq 42
+atus=$?"
+bind status=0
+~ # 
+[  198.838925] aspeed-i2c-bus 1e78a180.i2c: i2c bus 2 registered, irq 43
+~ # ls "$driver/"
+[  198.869805] aspeed-i2c-bus 1e78a200.i2c: i2c bus 3 registered, irq 44
+1e6e2000.syscon:pinctrl  uevent
+bind                     unbind
+[  198.902015] aspeed-i2c-bus 1e78a280.i2c: i2c bus 4 registered, irq 45
+[  198.917157] aspeed-i2c-bus 1e78a300.i2c: i2c bus 5 registered, irq 46
+~ # ls /sys/ke[  198.933269] aspeed-i2c-bus 1e78a380.i2c: i2c bus 6 registered, irq 47
+rnel/debug/pin[  198.958181] adt7475 7-002e: Error configuring attenuator bypass
+ctrl/
+1e6e2000.syscon:pinctrl-aspeed-g6-pinctrl
+pinctrl-devices[  198.992241] adt7475 7-002e: ADT7490 device, revision 2
+[  198.992451] adt7475 7-002e: Optional features: in4 pwm2
+[  198.992560] adt7475 7-002e: Bypassing attenuators on: in1 in3 in4
+
+pinctrl-handles
+pinctrl-maps
+~ # cat /sys/kernel/debug/pinctrl/pinctrl-devices
+[  199.071771] at24 7-0050: 1024 byte 24c08 EEPROM, writable, 16 bytes/write
+[  199.073110] aspeed-i2c-bus 1e78a400.i2c: i2c bus 7 registered, irq 48
+name [pinmux] [pinconf]
+aspeed-g6-pinctrl yes yes[  199.130075] lm75 8-004d: hwmon0: sensor 'lm75'
+[  199.132808] aspeed-i2c-bus 1e78a480.i2c: i2c bus 8 registered, irq 49
+
+[  199.152854] aspeed-i2c-bus 1e78a500.i2c: i2c bus 9 registered, irq 50
+[  199.168326] aspeed-i2c-bus 1e78a680.i2c: i2c bus 12 registered, irq 51
+~ # 
+~ # cat[  199.185759] aspeed-i2c-bus 1e78a700.i2c: i2c bus 13 registered, irq 52
+ "$debug/pin[  199.201443] aspeed-i2c-bus 1e78a780.i2c: i2c bus 14 registered, irq 53
+s" > /dev/null
+[  199.221611] aspeed-i2c-bus 1e78a800.i2c: i2c bus 15 registered, irq 54
+[  199.245650] fsi-master-aspeed 1e79b000.fsi: hub version e0050101 (1 links)
+[  199.245826] fsi-master-aspeed 1e79b000.fsi: mmode set to 70040110 (divisor 1)
+[  199.307077] sdhci-aspeed 1e750100.sdhci: Configured for slot 0
+~ # echo "debugfs read status=$?"
+debugfs read status=0
+~ # 
+~ # dmesg | grep -iE 'BUG:|KASAN:|use-after-free|Oops:|WARNING:'[  199.431463] mmc0: SDHCI controller on 1e750100.sdhci [1e750100.sdhci] using ADMA
+
+[    0.000000] kasan: Mapping kernel virtual memory block: 80000000-c0000000 at shadow: 6f000000-77000000
+[    0.000000] kasan: Mapping kernel virtual memory block: 7fe00000-80000000 at shadow: 6efc0000-6f000000
+~ # [6n
+~ # [6n
