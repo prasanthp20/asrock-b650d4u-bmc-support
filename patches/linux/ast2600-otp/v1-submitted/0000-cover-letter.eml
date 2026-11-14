@@ -1,0 +1,46 @@
+Return-Path: <prasanth.padarthi10@gmail.com>
+Received: from debian.prasanth ([114.79.136.19])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-37955e0d966sm2999565eec.15.2026.11.12.19.42.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Nov 2026 19:42:46 -0800 (PST)
+From: Prasanth Kumar Padarthi <prasanth.padarthi10@gmail.com>
+To: srini@kernel.org
+Cc: joel@jms.id.au,
+	andrew@codeconstruct.com.au,
+	ryan_chen@aspeedtech.com,
+	billy_tsai@aspeedtech.com,
+	neal_liu@aspeedtech.com,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-aspeed@lists.ozlabs.org,
+	Prasanth Kumar Padarthi <prasanth.padarthi10@gmail.com>
+Subject: [PATCH v1 0/1] nvmem: aspeed: Add read-only AST2600 OTP support
+Date: Fri, 13 Nov 2026 09:12:12 +0530
+Message-ID: <20261113034213.158390-1-prasanth.padarthi10@gmail.com>
+X-Mailer: git-send-email 2.47.3
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+
+Add a root-only, read-only NVMEM provider for AST2600 OTP, with serialized
+controller access, bounded polling and configured secure-prefix checks.
+The driver adapts ASPEED's downstream read sequence and preserves its
+attribution.
+
+Tested on ASRock Rack B650D4U (AST2600 A3), OpenBMC Linux 6.18.24:
+- Repeated, paired and cross-pair reads matched.
+- Four concurrent readers completed 40 matching reads.
+- Bytes 8172..8183 matched a separate vendor-derived reader.
+- Synthetic pre-MMIO timeout, failure latching and rebind recovery passed.
+
+Host fault-injection tests also passed all 42 polling-timeout cases using
+simulated registers and virtual time.
+
+Prasanth Kumar Padarthi (1):
+  nvmem: aspeed: Add read-only AST2600 OTP support
+
+ MAINTAINERS                 |   1 +
+ drivers/nvmem/Kconfig       |  12 ++
+ drivers/nvmem/Makefile      |   1 +
+ drivers/nvmem/ast2600-otp.c | 259 ++++++++++++++++++++++++++++++++++++
+ 4 files changed, 273 insertions(+)
+ create mode 100644 drivers/nvmem/ast2600-otp.c
